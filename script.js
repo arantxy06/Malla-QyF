@@ -1,25 +1,42 @@
-const malla = {
+
   "1° Semestre": [
     { nombre: "Química General I" },
     { nombre: "Biología Celular" },
-    { nombre: "Cálculo Diferencial" },
-    { nombre: "Salud Digital" }
+    { nombre: "Matemática" },
+    { nombre: "Introducción a las Ciencias Farmacéuticas" },
+    { nombre: "Integrado de Habilidades Científicas para el Químico Farmacéutico" },
+    { nombre: "Antropología" },
   ],
   "2° Semestre": [
     { nombre: "Química General II", prereq: ["Química General I"] },
-    { nombre: "Matemática" },
-    { nombre: "Física" },
-    { nombre: "Antropología Ética" }
+    { nombre: "Cálculo Diferencial", prereq: ["Matemática"]},
+    { nombre: "Física", prereq: ["Matemática"]},
+    { nombre: "Bioestadística", prereq: ["Matemática"] },
+    { nombre: "Fundamentos del Quehacer Farmacéutico", prereq: ["Integrado de Habilidades Científicas para el Químico Farmacéutico"] },
+    { nombre: "Ética", prereq: ["Antropología"] }
   ],
   "3° Semestre": [
-    { nombre: "Química Orgánica", prereq: ["Química General II"] },
-    { nombre: "Fisicoquímica" },
-    { nombre: "Bioestadística" },
-    { nombre: "Persona y Sociedad" }
-  ]
-  // 👉 Continúa agregando los demás semestres y ramos aquí
-};
-
+    { nombre: "Química Analítica Cualicuantitativa", prereq: ["Química General II"] },
+    { nombre: "Química Orgánica", prereq: ["Química General I"] },
+    { nombre: "Fisicoquímica", prereq: ["Química General II"] },
+    { nombre: "Fisiología Integrada", prereq: ["Biología Celular"] },
+    { nombre: "Salud Poblacional"},
+    { nombre: "Gestión Personal y Habilidades para la Vida"}
+  ],
+  "4° Semestre": [
+    { nombre: "Análisis Químico Instrumental", prereq: ["Química Analítica Cualicuantitativa"] },
+    { nombre: "Química Orgánica Avanzada", prereq: ["Química Orgánica"] },
+    { nombre: "Bioquímica General", prereq: ["Química Orgánica"] },
+    { nombre: "Fisiopatología", prereq: ["Fisiología Integrada"] },
+    { nombre: "Epidemiología", prereq: ["Salud Poblacional"] }
+    ],
+"5° Semestre": [
+    { nombre: "Farmacología I", prereq: ["Fisiopatología"] },
+    { nombre: "Salud Digital" },
+    { nombre: "Microbiología General", prereq: ["Bioquímica General"] },
+    { nombre: "Tecnología Farmacéutica I", prereq: ["Fisicoquímica"] },
+    { nombre: "Química Farmacéutica I", prereq: ["Química Orgánica Avanzada"] },
+    { nombre: "Persona y Sociedad", prereq: ["Ética"] }
 const approvedCourses = JSON.parse(localStorage.getItem('approvedCourses')) || [];
 
 const mallaDiv = document.getElementById('malla');
