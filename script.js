@@ -72,44 +72,58 @@
     "10° Semestre": [
     { nombre: "Internado" },
     ],
-approvedCourses = JSON.parse(localStorage.getItem('approvedCourses')) || [];
+    const approvedCourses = JSON.parse(localStorage.getItem('approvedCourses')) || [];
+const mallaDiv = document.getElementById('malla');
 
- mallaDiv = document.getElementById('malla');
+// Renderizar la malla
+function renderMalla() {
+  mallaDiv.innerHTML = ''; // Limpia todo antes de volver a dibujar
 
-n renderMalla() {
-  mallaDiv.innerHTML = '';
   Object.keys(malla).forEach(semestre => {
- semestreDiv = document.createElement('div');
+    const semestreDiv = document.createElement('div');
     semestreDiv.classList.add('semester');
     semestreDiv.innerHTML = `<h2>${semestre}</h2>`;
 
     malla[semestre].forEach(curso => {
-      courseDiv = document.createElement('div');
+      const courseDiv = document.createElement('div');
       courseDiv.classList.add('course');
       courseDiv.textContent = curso.nombre;
 
-      (approvedCourses.includes(curso.nombre)) {
+      // Verificar si el curso está aprobado
+      const isApproved = approvedCourses.includes(curso.nombre);
+
+      // Verificar si los prerrequisitos están aprobados
+      const prereqMet = curso.prereq ? curso.prereq.every(r => approvedCourses.includes(r)) : true;
+
+      if (isApproved) {
         courseDiv.classList.add('approved');
-      }  (curso.prereq && !curso.prereq.every(r => approvedCourses.includes(r))) {
+      } else if (!prereqMet) {
         courseDiv.classList.add('locked');
       }
 
+      // Evento click
       courseDiv.addEventListener('click', () => {
-         (courseDiv.classList.contains('locked')) return;
-        (approvedCourses.includes(curso.nombre)) {
-          approvedCourses.splice(approvedCourses.indexOf(curso.nombre), 1);
-        }  {
+        if (courseDiv.classList.contains('locked')) return; // No permitir click si está bloqueado
+
+        if (isApproved) {
+          // Si estaba aprobado, quitarlo
+          const index = approvedCourses.indexOf(curso.nombre);
+          if (index > -1) approvedCourses.splice(index, 1);
+        } else {
+          // Si no estaba aprobado, agregarlo
           approvedCourses.push(curso.nombre);
         }
+
+        // Guardar cambios
         localStorage.setItem('approvedCourses', JSON.stringify(approvedCourses));
-        renderMalla();
+        renderMalla(); // Volver a renderizar
       });
 
       semestreDiv.appendChild(courseDiv);
     });
+
     mallaDiv.appendChild(semestreDiv);
   });
 }
 
 renderMalla();
-
