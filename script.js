@@ -37,33 +37,68 @@
     { nombre: "Tecnología Farmacéutica I", prereq: ["Fisicoquímica"] },
     { nombre: "Química Farmacéutica I", prereq: ["Química Orgánica Avanzada"] },
     { nombre: "Persona y Sociedad", prereq: ["Ética"] }
-const approvedCourses = JSON.parse(localStorage.getItem('approvedCourses')) || [];
+    ],
+    "6° Semestre": [
+    { nombre: "Farmacología II", prereq: ["Farmacología I"] },
+    { nombre: "Bioética" },
+    { nombre: "Tecnología Farmacéutica II", prereq: ["Tecnología Farmacéutica I"] },
+    { nombre: "Química Farmacéutica II", prereq: ["Química Farmacéutica I"] },
+    { nombre: "Práctica I: Rol del Químico Farmacéutico", prereq: ["Farmacología II"] },
+    { nombre: "Electivo I: Formación e Identidad" }
+    ],
+    "7° Semestre": [
+    { nombre: "Metodología de la Investigación" },
+    { nombre: "Farmacia Clínica y Atención Farmacéutica I", prereq: ["Farmacología II"] },
+    { nombre: "Farmacognosia y Fisioterapia", prereq: ["Química Farmacéutica II"] },
+    { nombre: "Control y Aseguramiento de la Calidad Farmacéutica" },
+    { nombre: "Legislación Farmacéutica", prereq: ["Tecnología Farmacéutica II"] },
+    { nombre: "Electivo II: Formación e Identidad" }
+    ],
+    "8° Semestre": [
+    { nombre: "Farmacia Clínica y Atención Farmacéutica II", prereq: ["Farmacia Clínica y Atención Farmacéutica I"] },
+    { nombre: "Biofarmacia", prereq: ["Control y Aseguramiento de la Calidad Farmacéutica"] },
+    { nombre: "Toxicología", prereq: ["Farmacología II"] },
+    { nombre: "Farmacia Asistencial" },
+    { nombre: "Práctica II: Farmacia Comunitaria", prereq: ["Legislación Farmacéutica"] }
+    ],
+    "9° Semestre": [
+    { nombre: "Gestión y Marketing Farmacéutico" },
+    { nombre: "Farmacovigilancia y Tecnovigilancia" },
+    { nombre: "Electivo I" },
+    { nombre: "Electivo II" },
+    { nombre: "Electivo III" },
+    { nombre: "Electivo III: Formación e Identidad" }
+    ],
+    "10° Semestre": [
+    { nombre: "Internado" },
+    ],
+approvedCourses = JSON.parse(localStorage.getItem('approvedCourses')) || [];
 
-const mallaDiv = document.getElementById('malla');
+ mallaDiv = document.getElementById('malla');
 
-function renderMalla() {
+n renderMalla() {
   mallaDiv.innerHTML = '';
   Object.keys(malla).forEach(semestre => {
-    const semestreDiv = document.createElement('div');
+ semestreDiv = document.createElement('div');
     semestreDiv.classList.add('semester');
     semestreDiv.innerHTML = `<h2>${semestre}</h2>`;
 
     malla[semestre].forEach(curso => {
-      const courseDiv = document.createElement('div');
+      courseDiv = document.createElement('div');
       courseDiv.classList.add('course');
       courseDiv.textContent = curso.nombre;
 
-      if (approvedCourses.includes(curso.nombre)) {
+      (approvedCourses.includes(curso.nombre)) {
         courseDiv.classList.add('approved');
-      } else if (curso.prereq && !curso.prereq.every(r => approvedCourses.includes(r))) {
+      }  (curso.prereq && !curso.prereq.every(r => approvedCourses.includes(r))) {
         courseDiv.classList.add('locked');
       }
 
       courseDiv.addEventListener('click', () => {
-        if (courseDiv.classList.contains('locked')) return;
-        if (approvedCourses.includes(curso.nombre)) {
+         (courseDiv.classList.contains('locked')) return;
+        (approvedCourses.includes(curso.nombre)) {
           approvedCourses.splice(approvedCourses.indexOf(curso.nombre), 1);
-        } else {
+        }  {
           approvedCourses.push(curso.nombre);
         }
         localStorage.setItem('approvedCourses', JSON.stringify(approvedCourses));
