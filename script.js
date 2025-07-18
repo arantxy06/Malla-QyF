@@ -127,3 +127,7 @@ function renderMalla() {
 }
 
 renderMalla();
+function toggleAprobado(element) {
+  element.classList.toggle("aprobado");
+  element.classList.toggle("no-aprobado");
+}
